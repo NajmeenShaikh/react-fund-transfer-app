@@ -4,43 +4,44 @@ function TransferForm({ balance, setBalance, transactions, setTransactions }) {
   const [toAccount, setToAccount] = useState("");
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
-
+  const [type, setType] = useState("DEBIT");
   const handleTransfer = () => {
     if (!toAccount || !amount) {
-      setMessage("Please Fill All The Fields");
+      setMessage("❌ Please fill all fields");
       return;
     }
 
     if (amount <= 0) {
-      setMessage("Please Transfer Amount Greater than Zero!");
+      setMessage("❌ Amount must be greater than zero");
       return;
     }
 
-    if (amount > balance) {
-      setMessage("Insufficient Balance!");
+    if (type === "DEBIT" && amount > balance) {
+      setMessage("❌ Insufficient balance");
       return;
     }
 
-    //perform Transfer
-
-    setBalance(balance - amount);
-
-    //save transactions
+    if (type === "DEBIT") {
+      setBalance(balance - Number(amount));
+    } else {
+      setBalance(balance + Number(amount));
+    }
 
     setTransactions([
       ...transactions,
       {
-        toAccount: toAccount,
+        to: toAccount,
         amount: Number(amount),
+        type,
         date: new Date().toLocaleString(),
       },
     ]);
 
-    setMessage("✓ Transfer Sucessful!!");
+    setMessage(`✅ ${type} transaction successful`);
 
-    //Reset Form
     setToAccount("");
     setAmount("");
+    setType("DEBIT");
   };
 
   return (
@@ -58,6 +59,17 @@ function TransferForm({ balance, setBalance, transactions, setTransactions }) {
             value={toAccount}
             onChange={(e) => setToAccount(e.target.value)}
           />
+
+          <div className="mb-3">
+            <label className="form-label">Transaction Type</label>
+            <select
+              className="form-select"
+              value={type}
+              onChange={(e) => setType(e.target.value)}>
+              <option value="DEBIT">Debit</option>
+              <option value="CREDIT">Credit</option>
+            </select>
+          </div>
         </div>
 
         <div className="mb-4">

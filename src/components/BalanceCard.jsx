@@ -2,7 +2,7 @@ function BalanceCard({ balance }) {
   return (
     <div className="card mb-4">
       <div className="card-body">
-        <h5 className="card-title">Current Balance {balance}</h5>
+        <h2 className="card-title">Current Balance {balance}</h2>
       </div>
     </div>
   );

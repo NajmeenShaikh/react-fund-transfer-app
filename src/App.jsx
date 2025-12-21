@@ -1,12 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BalanceCard from "./components/BalanceCard.jsx";
 import TransferForm from "./components/TransferForm.jsx";
 import TransactionList from "./components/TransactionList.jsx";
+import { fetchTransactions } from "./api/mockApi";
 
 function App() {
   const [balance, setBalance] = useState(5000);
 
   const [transactions, setTransactions] = useState([]);
+
+  useEffect(() => {
+    fetchTransactions().then((data) => {
+      setTransactions(data);
+    });
+  }, []);
 
   return (
     <div className="container mt-7">
