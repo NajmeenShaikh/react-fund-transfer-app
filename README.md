@@ -1,6 +1,6 @@
 # 🏦 Fund Transfer App (React)
 
-A beginner-friendly mini banking project simulating fund transfers with validations and transaction history.
+A React-based banking fund transfer application demonstrating transaction workflows, form validation, reusable components, and state-driven UI.
 
 ## ✨ Features
 - Account balance management
