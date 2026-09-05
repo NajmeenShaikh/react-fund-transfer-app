@@ -38,8 +38,21 @@ The application is structured around reusable React components with
 separation of UI responsibilities and application logic.
 
 ## 📸 Screenshots
+screenshots/
+├── dashboard.png
+├── fund-transfer.png
+├── transaction-history.png
+└── validation.png
+## 📸 Screenshots
 
-Add actual screenshots here.
+### Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### Fund Transfer
+![Fund Transfer](screenshots/fund-transfer.png)
+
+### Transaction History
+![Transaction History](screenshots/transaction-history.png)
 
 ## 🚀 Getting Started
 
