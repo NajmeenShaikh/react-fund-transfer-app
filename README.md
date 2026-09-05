@@ -21,7 +21,16 @@ A React-based banking fund transfer application demonstrating transaction workfl
 - Component-based architecture
 
 ## 📸 Screenshots
-(Add screenshots here)
+## 📸 Application Screenshots
+
+### Fund Transfer
+![Fund Transfer](screenshots/fund-transfer.png)
+
+### Transaction History
+![Transaction History](screenshots/transaction-history.png)
+
+### Validation
+![Validation](screenshots/validation.png)
 
 ## 🚀 Future Enhancements
 - Debit/Credit toggle
