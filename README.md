@@ -1,38 +1,65 @@
-# 🏦 Fund Transfer App (React)
+# React Fund Transfer Application
 
-A React-based banking fund transfer application demonstrating transaction workflows, form validation, reusable components, and state-driven UI.
+A React-based banking application demonstrating a fund transfer workflow,
+form validation, reusable UI components, transaction handling, and
+responsive frontend development.
 
-## ✨ Features
-- Account balance management
-- Fund transfer with validation
+## 🎯 Business Use Case
+
+The application simulates a banking fund transfer workflow where users
+can enter transfer details, validate the transaction, and review
+transaction-related information.
+
+## ✨ Key Features
+
+- Fund transfer workflow
+- Form validation
+- Account balance display
 - Transaction history
-- Clean UI with Bootstrap
+- Reusable React components
+- Controlled form inputs
+- Responsive UI
+- Error and validation handling
+- State-driven UI
 
-## 🛠 Tech Stack
-- React (Vite)
-- JavaScript (ES6)
+## 🛠️ Tech Stack
+
+- React.js
+- JavaScript
+- React Hooks
+- Vite
 - Bootstrap
-- GitHub
+- HTML5
+- CSS3
 
-## 🎯 Learning Outcome
-- React hooks (useState)
-- Controlled components
-- Banking validations
-- Component-based architecture
+## 🏗️ Architecture
+
+The application is structured around reusable React components with
+separation of UI responsibilities and application logic.
 
 ## 📸 Screenshots
-## 📸 Application Screenshots
 
-### Fund Transfer
-![Fund Transfer](screenshots/fund-transfer.png)
+Add actual screenshots here.
 
-### Transaction History
-![Transaction History](screenshots/transaction-history.png)
+## 🚀 Getting Started
 
-### Validation
-![Validation](screenshots/validation.png)
+### Install dependencies
 
-## 🚀 Future Enhancements
-- Debit/Credit toggle
-- Bank statement filters
-- Mock API integration
+npm install
+
+### Run locally
+
+npm run dev
+
+## 🧪 Testing
+
+Add testing instructions here when tests are available.
+
+## 🔮 Future Improvements
+
+- TypeScript migration
+- REST API integration
+- Authentication
+- Transaction status handling
+- Automated tests
+- Improved accessibility
