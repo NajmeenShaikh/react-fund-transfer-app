@@ -1,4 +1,9 @@
 import { useState } from "react";
+import {
+  applyTransfer,
+  createTransaction,
+  validateTransfer,
+} from "../services/transferService.js";
 
 function TransferForm({ balance, setBalance, transactions, setTransactions }) {
   const [toAccount, setToAccount] = useState("");
@@ -8,43 +13,25 @@ function TransferForm({ balance, setBalance, transactions, setTransactions }) {
   const [type, setType] = useState("DEBIT");
 
   const handleTransfer = () => {
-    const numericAmount = Number(amount);
-    const trimmedAccount = toAccount.trim();
+    const result = validateTransfer({ balance, toAccount, amount, type });
 
-    if (!trimmedAccount || !amount) {
+    if (!result.valid) {
       setMessageType("danger");
-      setMessage("Please enter the destination account and amount.");
-      return;
-    }
-
-    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
-      setMessageType("danger");
-      setMessage("Amount must be greater than zero.");
-      return;
-    }
-
-    if (type === "DEBIT" && numericAmount > balance) {
-      setMessageType("danger");
-      setMessage("Insufficient balance for this transfer.");
+      setMessage(result.message);
       return;
     }
 
     setBalance((currentBalance) =>
-      type === "DEBIT"
-        ? currentBalance - numericAmount
-        : currentBalance + numericAmount
+      applyTransfer(currentBalance, result.numericAmount, type)
     );
 
     setTransactions((currentTransactions) => [
       ...currentTransactions,
-      {
-        id: `TXN-${Date.now()}`,
-        to: trimmedAccount,
-        amount: numericAmount,
+      createTransaction({
+        toAccount: result.trimmedAccount,
+        amount: result.numericAmount,
         type,
-        date: new Date().toISOString(),
-        status: "SUCCESS",
-      },
+      }),
     ]);
 
     setMessageType("success");
@@ -79,6 +66,7 @@ function TransferForm({ balance, setBalance, transactions, setTransactions }) {
             onChange={(event) => setToAccount(event.target.value)}
             placeholder="e.g. AC-458921"
             autoComplete="off"
+            required
           />
         </div>
 
@@ -111,6 +99,7 @@ function TransferForm({ balance, setBalance, transactions, setTransactions }) {
             step="0.01"
             inputMode="decimal"
             aria-describedby="amount-help"
+            required
           />
           <div id="amount-help" className="form-text">
             Available balance: ₹{balance.toFixed(2)}
