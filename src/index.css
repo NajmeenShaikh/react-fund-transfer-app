@@ -1,3 +1,16 @@
 body {
-  background-color: blueviolet;
+  margin: 0;
+  background: #f5f7fa;
+  color: #1f2937;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.card {
+  border-radius: 0.75rem;
+}
+
+.form-control:focus,
+.form-select:focus,
+.btn:focus-visible {
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
 }
