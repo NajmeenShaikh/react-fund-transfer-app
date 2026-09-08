@@ -55,13 +55,13 @@ function App() {
       />
 
       {loadError && (
-        <div className="alert alert-danger mt-4" role="alert">
+        <div className="alert alert-danger mt-4" role="alert" aria-live="assertive">
           {loadError}
         </div>
       )}
 
       {isLoading ? (
-        <div className="card mt-4" aria-live="polite">
+        <div className="card mt-4" role="status" aria-live="polite">
           <div className="card-body">Loading transaction history…</div>
         </div>
       ) : (
