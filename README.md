@@ -1,78 +1,162 @@
 # React Fund Transfer Application
 
-A React-based banking application demonstrating a fund transfer workflow,
-form validation, reusable UI components, transaction handling, and
-responsive frontend development.
+A production-style banking frontend demonstrating a realistic fund-transfer workflow with validation, account balance management, transaction history, accessible UI patterns, and a service layer ready for REST API integration.
+
+> **Portfolio focus:** React frontend engineering for BFSI / FinTech applications.
 
 ## 🎯 Business Use Case
 
-The application simulates a banking fund transfer workflow where users
-can enter transfer details, validate the transaction, and review
-transaction-related information.
+This application simulates a digital banking transfer journey. A customer can enter a destination account, choose a debit or credit transaction, validate the amount against the available balance, submit the transaction, and review transaction history.
+
+The project is intentionally designed around common banking frontend concerns: predictable state transitions, validation, transaction status, loading states, error handling, responsive UI, and accessibility.
 
 ## ✨ Key Features
 
 - Fund transfer workflow
-- Form validation
-- Account balance display
-- Transaction history
+- Debit and credit transaction handling
+- Available balance calculation
+- Destination-account validation
+- Positive amount validation
+- Insufficient-balance protection for debits
+- Transaction history with debit/credit filtering
+- Transaction status display
+- Loading and error states
 - Reusable React components
 - Controlled form inputs
-- Responsive UI
-- Error and validation handling
-- State-driven UI
+- Responsive Bootstrap UI
+- Semantic HTML and accessible form labels
+- Keyboard-visible focus states
+- Mock service layer that can be replaced by REST APIs
 
 ## 🛠️ Tech Stack
 
-- React.js
-- JavaScript
+- React 19
+- JavaScript (ES6+)
 - React Hooks
 - Vite
-- Bootstrap
-- HTML5
-- CSS3
+- Bootstrap 5
+- HTML5 / CSS3
+- ESLint
 
-## 🏗️ Architecture
+## 🏗️ Frontend Architecture
 
-The application is structured around reusable React components with
-separation of UI responsibilities and application logic.
+```text
+src/
+├── api/
+│   └── mockApi.js
+├── components/
+│   ├── BalanceCard.jsx
+│   ├── TransferForm.jsx
+│   └── TransactionList.jsx
+├── App.jsx
+├── main.jsx
+└── index.css
+```
 
-## 📸 Screenshots
-screenshots/
-├── dashboard.png
-├── fund-transfer.png
-├── transaction-history.png
-└── validation.png
-## 📸 Screenshots
+The component layer handles presentation and user interaction, while the API module isolates transaction retrieval so it can later be replaced with a real HTTP client without coupling network concerns to UI components.
 
-### Dashboard
-![Dashboard](screenshots/dashboard.png)
+### Target production API flow
 
-### Fund Transfer
-![Fund Transfer](screenshots/fund-transfer.png)
+```text
+React Components
+      ↓
+Custom Hooks / Application State
+      ↓
+Service Layer
+      ↓
+REST API
+      ↓
+Banking Backend
+```
 
-### Transaction History
-![Transaction History](screenshots/transaction-history.png)
+Potential endpoints for a production backend:
+
+- `GET /accounts`
+- `GET /transactions`
+- `GET /beneficiaries`
+- `POST /transfers`
+- `GET /notifications`
+
+## ♿ Accessibility
+
+The UI follows practical accessibility patterns including:
+
+- Explicit labels connected to form controls
+- Semantic `main`, `section`, `table`, and heading elements
+- Screen-reader-friendly status messaging
+- Keyboard-visible focus styles
+- Accessible transaction table headers
+- Empty and error states that do not rely only on color
+
+## 🧪 Testing Strategy
+
+Automated tests are the next engineering layer for this project. The intended test suite should cover:
+
+- Required-field validation
+- Invalid and zero/negative amounts
+- Insufficient balance
+- Successful debit transaction
+- Successful credit transaction
+- Transaction history filtering
+- Loading and error states
+- Accessible form controls
+
+Recommended tooling: **Vitest + React Testing Library**.
 
 ## 🚀 Getting Started
 
 ### Install dependencies
 
+```bash
 npm install
+```
 
 ### Run locally
 
+```bash
 npm run dev
+```
 
-## 🧪 Testing
+### Build for production
 
-Add testing instructions here when tests are available.
+```bash
+npm run build
+```
 
-## 🔮 Future Improvements
+### Run linting
 
-- TypeScript migration
-- REST API integration
-- Authentication
-- Transaction status handling
-- Automated tests
-- Improved accessibility
+```bash
+npm run lint
+```
+
+## 🔐 Security Notes
+
+This is a frontend portfolio simulation and does not process real money or sensitive banking credentials. Never commit API keys, passwords, tokens, customer PII, or real financial data.
+
+## 📸 Screenshots
+
+Add current screenshots here after the UI is finalized:
+
+- Dashboard / balance
+- Fund transfer form
+- Validation state
+- Transaction history
+
+## 🔮 Production Roadmap
+
+- [ ] Migrate UI and domain models to TypeScript
+- [ ] Add REST API integration
+- [ ] Add authentication and authorization flow
+- [ ] Add beneficiary management
+- [ ] Add transaction confirmation step
+- [ ] Add pending / success / failed transaction states
+- [ ] Add Vitest + React Testing Library coverage
+- [ ] Add GitHub Actions CI
+- [ ] Add stronger form schema validation
+- [ ] Add API retry and error recovery
+
+## 👩‍💻 Author
+
+**Najmeen Shaikh** — React UI Frontend Developer focused on React, TypeScript, JavaScript, REST APIs, and BFSI / FinTech applications.
+
+GitHub: https://github.com/NajmeenShaikh
