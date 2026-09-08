@@ -4,89 +4,124 @@ function TransferForm({ balance, setBalance, transactions, setTransactions }) {
   const [toAccount, setToAccount] = useState("");
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("info");
   const [type, setType] = useState("DEBIT");
+
   const handleTransfer = () => {
-    if (!toAccount || !amount) {
-      setMessage("❌ Please fill all fields");
+    const numericAmount = Number(amount);
+    const trimmedAccount = toAccount.trim();
+
+    if (!trimmedAccount || !amount) {
+      setMessageType("danger");
+      setMessage("Please enter the destination account and amount.");
       return;
     }
 
-    if (amount <= 0) {
-      setMessage("❌ Amount must be greater than zero");
+    if (!Number.isFinite(numericAmount) || numericAmount <= 0) {
+      setMessageType("danger");
+      setMessage("Amount must be greater than zero.");
       return;
     }
 
-    if (type === "DEBIT" && amount > balance) {
-      setMessage("❌ Insufficient balance");
+    if (type === "DEBIT" && numericAmount > balance) {
+      setMessageType("danger");
+      setMessage("Insufficient balance for this transfer.");
       return;
     }
 
-    if (type === "DEBIT") {
-      setBalance(balance - Number(amount));
-    } else {
-      setBalance(balance + Number(amount));
-    }
+    setBalance((currentBalance) =>
+      type === "DEBIT"
+        ? currentBalance - numericAmount
+        : currentBalance + numericAmount
+    );
 
-    setTransactions([
-      ...transactions,
+    setTransactions((currentTransactions) => [
+      ...currentTransactions,
       {
-        to: toAccount,
-        amount: Number(amount),
+        id: `TXN-${Date.now()}`,
+        to: trimmedAccount,
+        amount: numericAmount,
         type,
-        date: new Date().toLocaleString(),
+        date: new Date().toISOString(),
+        status: "SUCCESS",
       },
     ]);
 
-    setMessage(`✅ ${type} transaction successful`);
-
+    setMessageType("success");
+    setMessage(`${type} transaction completed successfully.`);
     setToAccount("");
     setAmount("");
     setType("DEBIT");
   };
 
   return (
-    <div className="card">
+    <section className="card" aria-labelledby="transfer-heading">
       <div className="card-body">
-        <h5 className="card-title"> Transfer funds</h5>
+        <h2 id="transfer-heading" className="h5 card-title">
+          Transfer funds
+        </h2>
 
-        {message && <p className="alert alert-info"> {message} </p>}
+        {message && (
+          <div className={`alert alert-${messageType}`} role="status" aria-live="polite">
+            {message}
+          </div>
+        )}
 
         <div className="mb-3">
-          <label className="form-label"> To Account </label>
+          <label className="form-label" htmlFor="to-account">
+            Destination account
+          </label>
           <input
+            id="to-account"
             type="text"
             className="form-control"
             value={toAccount}
-            onChange={(e) => setToAccount(e.target.value)}
+            onChange={(event) => setToAccount(event.target.value)}
+            placeholder="e.g. AC-458921"
+            autoComplete="off"
           />
+        </div>
 
-          <div className="mb-3">
-            <label className="form-label">Transaction Type</label>
-            <select
-              className="form-select"
-              value={type}
-              onChange={(e) => setType(e.target.value)}>
-              <option value="DEBIT">Debit</option>
-              <option value="CREDIT">Credit</option>
-            </select>
-          </div>
+        <div className="mb-3">
+          <label className="form-label" htmlFor="transaction-type">
+            Transaction type
+          </label>
+          <select
+            id="transaction-type"
+            className="form-select"
+            value={type}
+            onChange={(event) => setType(event.target.value)}
+          >
+            <option value="DEBIT">Debit</option>
+            <option value="CREDIT">Credit</option>
+          </select>
         </div>
 
         <div className="mb-4">
-          <label className="form-label"> Amount </label>
+          <label className="form-label" htmlFor="transfer-amount">
+            Amount (INR)
+          </label>
           <input
+            id="transfer-amount"
             type="number"
             className="form-control"
             value={amount}
-            onChange={(e) => setAmount(e.target.value)}
+            onChange={(event) => setAmount(event.target.value)}
+            min="0.01"
+            step="0.01"
+            inputMode="decimal"
+            aria-describedby="amount-help"
           />
+          <div id="amount-help" className="form-text">
+            Available balance: ₹{balance.toFixed(2)}
+          </div>
         </div>
 
-        <button className="btn btn-primary" onClick={handleTransfer}>
-          Transfer
+        <button type="button" className="btn btn-primary" onClick={handleTransfer}>
+          Submit transfer
         </button>
       </div>
-    </div>
+    </section>
   );
 }
 
