@@ -1,80 +1,70 @@
 # React Fund Transfer Application
 
-A production-style banking frontend demonstrating a realistic fund-transfer workflow with validation, balance management, transaction history, accessibility, automated tests, and a service layer ready for REST API integration.
+A production-style banking frontend demonstrating a realistic **fund-transfer business workflow** with validation, balance protection, transaction history, accessibility, automated tests and a service boundary ready for REST integration.
 
-> **Portfolio focus:** React frontend engineering for BFSI / FinTech applications.
+> **Portfolio role:** Business-workflow project supporting my React/BFSI frontend portfolio.
 
-## 🎯 Business Use Case
+## 🎯 Business Workflow
 
-Simulates a digital banking transfer journey where a customer enters a destination account, selects debit or credit, validates the amount, submits the transaction, and reviews transaction history.
+**Enter transfer details → validate business rules → submit → process → show success/failure → record transaction**
 
-## ✨ Key Features
+The application simulates a digital banking transfer journey where a customer enters a destination account, chooses debit or credit, validates the amount and reviews transaction history.
 
-- Fund transfer workflow
-- Debit and credit transaction handling
+## ✨ Key Engineering Features
+
+- Debit and credit transfer handling
 - Available-balance protection for debit transfers
 - Destination-account and amount validation
 - Transaction history with debit/credit filtering
-- Loading, error, and success states
-- Reusable React components
-- Controlled form inputs
-- Responsive Bootstrap UI
-- Semantic HTML and accessible status messaging
-- Keyboard-visible focus states
+- Loading, error and success states
+- Reusable React components and controlled inputs
 - Isolated transfer service layer
-- Automated unit tests with Node.js test runner
-- GitHub Actions CI for lint, tests, and production build
-
-## 🛠️ Tech Stack
-
-- React 19
-- JavaScript ES6+
-- React Hooks
-- Vite
-- Bootstrap 5
-- HTML5 / CSS3
-- ESLint
-- Node.js built-in test runner
-- GitHub Actions
+- Responsive Bootstrap UI
+- Semantic HTML and keyboard-visible focus states
+- Accessible status and error messaging
+- Automated service tests with Node.js test runner
+- GitHub Actions CI for lint, tests and production build
 
 ## 🏗️ Architecture
 
 ```text
-UI Components
-      ↓
+React UI
+   ↓
 Application State
-      ↓
+   ↓
 Transfer Service
-      ↓
-Mock API / REST API
-      ↓
+   ↓
+Mock API / REST Boundary
+   ↓
 Banking Backend
 ```
 
-Business rules are isolated in `src/services/transferService.js`, keeping validation and balance transitions out of the form component and making the core workflow independently testable.
+Business rules are isolated in `src/services/transferService.js` rather than being embedded in the form component. This keeps the workflow easier to test and makes the UI less coupled to data-access concerns.
 
-### Production API target
+## 🔌 Production API Boundary
 
 ```text
 GET  /accounts
 GET  /transactions
 GET  /beneficiaries
-POST /transfers
 GET  /notifications
+POST /transfers
 ```
+
+The current implementation uses local/mock services so the project runs without credentials or external infrastructure. A production integration would move authorization, final validation, transaction limits, idempotency, audit logging and transaction execution to trusted backend services.
 
 ## 🧪 Testing
 
-The automated service tests cover:
+The service tests cover critical business rules:
 
 - Valid debit transfers
 - Empty destination account
-- Zero, negative, and invalid amounts
+- Zero, negative and invalid amounts
 - Insufficient debit balance
 - Debit/credit balance transitions
 - Successful transaction creation
 
-### Commands
+Run locally:
 
 ```bash
 npm install
@@ -95,24 +85,16 @@ npm run build
 - Keyboard-visible focus styles
 - Empty/error states that do not depend only on color
 
-## 🔐 Security Notes
+## 🔐 Security Boundary
 
-This is a frontend portfolio simulation. It does not process real money or sensitive banking credentials. Never commit API keys, passwords, tokens, customer PII, or real financial data.
+This is a frontend portfolio simulation. It does not process real money or store credentials, tokens, customer PII or real financial data.
 
-## 🚀 Production Roadmap
+The frontend demonstrates business-rule handling, but production security controls must remain server-side.
 
-- [ ] Migrate UI/domain models to TypeScript
-- [ ] Replace mock API with authenticated REST APIs
-- [ ] Add beneficiary management
-- [ ] Add transfer confirmation / OTP workflow
-- [ ] Add server-side validation and idempotency handling
-- [ ] Add pending / success / failed transaction lifecycle
-- [ ] Add React Testing Library component coverage
-- [ ] Add E2E testing
-- [ ] Add API retry and recovery strategy
+## 💡 Interview Topics Demonstrated
+
+This project gives concrete examples for discussing **component boundaries, controlled forms, business validation, derived transaction state, service-layer separation, API contracts, failure states, accessibility and testing strategy**.
 
 ## 👩‍💻 Author
 
-**Najmeen Shaikh** — React UI Frontend Developer focused on React, TypeScript, JavaScript, REST APIs, and BFSI / FinTech applications.
-
-GitHub: https://github.com/NajmeenShaikh
+**Najmeen Shaikh** — React UI Frontend Developer focused on React, TypeScript, JavaScript, REST APIs and BFSI / FinTech applications.
